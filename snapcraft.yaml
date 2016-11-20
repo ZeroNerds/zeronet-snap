@@ -2,38 +2,24 @@ name: zeronet
 version: 0.0.1
 summary: Open, free and uncensorable websites, using Bitcoin and BitTorrent
 description: |
-  This is my-snap's description. You have a paragraph or two to tell the
-  most important story about your snap. Keep it under 100 words though,
-  we live in tweetspace and your description wants to look good in the snap
-  store.
+  Decentralized websites using Bitcoin crypto and the BitTorrent network - https://zeronet.io
+  Why?
+  We believe in open, free, and uncensored network and communication.
+  No single point of failure: Site remains online so long as at least 1 peer is serving it.
+  No hosting costs: Sites are served by visitors.
+  Impossible to shut down: It's nowhere because it's everywhere.
+  Fast and works offline: You can access the site even if Internet is unavailable.
 
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
 apps:
-#  zeronet:
-#    command: usr/bin/python3 $SNAP/zeronet/zeronet.py
   zeronet:
     command: bash $SNAP/zero/ZeroNet.sh
     plugs: [network,network-bind]
   env:
     command: env
-#    daemon: simple
 parts:
-#  py:
-#    plugin: python
-#    stage-packages:
-#      - python3
-#      - python3-gevent
-#  code:
-#    after:
-#      - py
-#    source: https://github.com/HelloZeroNet/ZeroNet
-#    source-branch: master
-#    source-type: git
-#    plugin: dump
-#    organize:
-#      .: zeronet
   bundle:
     source: https://github.com/HelloZeroNet/ZeroBundle/raw/master/dist/ZeroBundle-linux64.tar.gz
     plugin: dump
@@ -65,13 +51,3 @@ parts:
       - zero
     organize:
       zeronet.sh: zero/ZeroNet.sh
-#  deb:
-#    plugin: nil
-#
-#    filesets:
-#      python:
-#        - usr/bin/python*
-#        - lib
-#        - usr/lib
-#    snap:
-#      - $python
