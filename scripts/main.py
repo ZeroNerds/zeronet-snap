@@ -3,6 +3,7 @@
 
 # Included modules
 import os
+import sys
 
 # ZeroNet Modules
 import zeronet
@@ -12,7 +13,8 @@ def mkdirp(directory):
         os.makedirs(directory)
 
 def main():
-    mkdirp(os.environ['SNAP_USER_DATA']+"/data")
+    sys.argv = [sys.argv[0]]+["--data_dir", os.environ['SNAP_USER_COMMON']+"/data", "--log_dir", os.environ['SNAP_USER_DATA']+"/log"]+sys.argv[1:]
+    mkdirp(os.environ['SNAP_USER_COMMON']+"/data")
     mkdirp(os.environ['SNAP_USER_DATA']+"/log")
     os.chdir(os.environ['SNAP'])
     zeronet.main()
