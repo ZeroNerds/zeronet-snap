@@ -1,5 +1,5 @@
 name: zeronet
-version: 0.0.1
+version: 0.5.1-a0
 summary: Open, free and uncensorable websites, using Bitcoin and BitTorrent
 description: |
   Decentralized websites using Bitcoin crypto and the BitTorrent network - https://zeronet.io
@@ -11,11 +11,11 @@ description: |
   Fast and works offline: You can access the site even if Internet is unavailable.
 
 grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: devmode # use 'strict' once you have the right plugs and slots
+confinement: strict
 
 apps:
   zeronet:
-    command: bash $SNAP/zero/ZeroNet.sh
+    command: zero/Python/python $SNAP/main.py --data_dir $SNAP_USER_DATA/data --log_dir $SNAP_USER_DATA/data
     plugs: [network,network-bind]
   env:
     command: env
@@ -36,18 +36,14 @@ parts:
     source-branch: master
     source-type: git
     snap:
-      - zeronet
+      - src
+      - tools
+      - plugins
+      - zeronet.py
+      - start.py
     plugin: dump
-    organize:
-      src: zeronet/src
-      tools: zeronet/tools
-      plugins: zeronet/plugins
-      zeronet.py: zeronet/zeronet.py
-      start.py: zeronet/start.py
   scripts:
     source: scripts
     plugin: dump
     snap:
-      - zero
-    organize:
-      zeronet.sh: zero/ZeroNet.sh
+      - main.py
