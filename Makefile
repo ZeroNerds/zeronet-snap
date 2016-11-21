@@ -16,3 +16,5 @@ build:
 	snapcraft build
 test: clean dockerbuild deploy
 	@echo "Insert tests here"
+publish: test
+	snapcraft push zeronet*.snap

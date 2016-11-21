@@ -21,8 +21,6 @@ apps:
   zeronet:
     command: bin/zeronet
     plugs: [network,network-bind]
-  env:
-    command: env
 parts:
   bundle:
     after:
