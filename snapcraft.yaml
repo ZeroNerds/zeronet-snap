@@ -19,43 +19,18 @@ confinement: strict
 
 apps:
   zeronet:
-#    command: usr/bin/python $SNAP/main.py
     command: bin/zeronet
     plugs: [network,network-bind]
   env:
     command: env
 parts:
-#  py:
-#    source: scripts
-#    stage-packages:
-#      - python2.7
-#    plugin: dump
   bundle:
     after:
-#      - py
       - source
-#    build-packages:
-#      - python-pip
-#      - python-setuptools
-#      - python-wheel
-#      - build-essential
-#      - python-dev
-#    plugin: make
     source: bundle
     plugin: python
     python-version: python2
-#    requirements:
-#  bundle:
-#    source: https://github.com/HelloZeroNet/ZeroBundle/raw/master/dist/ZeroBundle-linux64.tar.gz
-#    plugin: dump
-#    snap:
-#      - zero
-#      - LICENSE
-#    organize:
-#      ssl: zero/ssl
-#      Python: zero/Python
-#      lib: zero/lib
-#      LICENSE.txt: LICENSE
+#    requirements: todo: use requirements.txt instead of setup.py
   source:
     source: https://github.com/HelloZeroNet/ZeroNet
     source-branch: master
@@ -66,12 +41,6 @@ parts:
       - plugins
       - zeronet.py
       - start.py
-#      - requirements.txt
-#    organize:
-#      src: zeronet/src
-#      tools: zeronet/tools
-#      plugins: zeronet/plugins
-#      start.py: zeronet/start.py
     plugin: dump
   scripts:
     source: scripts
@@ -79,4 +48,4 @@ parts:
       - bundle
     plugin: dump
     organize:
-      launcher.py: bin/zeronet
+      launcher.py: bin/zeronet #todo: get rid of this hack

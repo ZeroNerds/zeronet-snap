@@ -8,7 +8,7 @@ import sys
 # ZeroNet Modules
 import imp
 
-zeronet = imp.load_source('zeronet', os.environ['SNAP']+'/zeronet.py')
+zeronet = imp.load_source('zeronet', os.environ['SNAP']+'/zeronet.py') #todo: fix snapcraft.yml and change back to "import zeronet"
 
 def mkdirp(directory):
     if not os.path.exists(directory):
