@@ -1,5 +1,5 @@
 name: zeronet
-version: 0.5.1-r0
+version: 0.5.1-r1
 summary: Open, free and uncensorable websites, using Bitcoin and BitTorrent
 description: |
   Decentralized websites using Bitcoin crypto and the BitTorrent network - https://zeronet.io
@@ -19,22 +19,43 @@ confinement: strict
 
 apps:
   zeronet:
-    command: zero/Python/python $SNAP/main.py
+#    command: usr/bin/python $SNAP/main.py
+    command: bin/zeronet
     plugs: [network,network-bind]
   env:
     command: env
 parts:
+#  py:
+#    source: scripts
+#    stage-packages:
+#      - python2.7
+#    plugin: dump
   bundle:
-    source: https://github.com/HelloZeroNet/ZeroBundle/raw/master/dist/ZeroBundle-linux64.tar.gz
-    plugin: dump
-    snap:
-      - zero
-      - LICENSE
-    organize:
-      ssl: zero/ssl
-      Python: zero/Python
-      lib: zero/lib
-      LICENSE.txt: LICENSE
+    after:
+#      - py
+      - source
+#    build-packages:
+#      - python-pip
+#      - python-setuptools
+#      - python-wheel
+#      - build-essential
+#      - python-dev
+#    plugin: make
+    source: bundle
+    plugin: python
+    python-version: python2
+#    requirements:
+#  bundle:
+#    source: https://github.com/HelloZeroNet/ZeroBundle/raw/master/dist/ZeroBundle-linux64.tar.gz
+#    plugin: dump
+#    snap:
+#      - zero
+#      - LICENSE
+#    organize:
+#      ssl: zero/ssl
+#      Python: zero/Python
+#      lib: zero/lib
+#      LICENSE.txt: LICENSE
   source:
     source: https://github.com/HelloZeroNet/ZeroNet
     source-branch: master
@@ -45,9 +66,17 @@ parts:
       - plugins
       - zeronet.py
       - start.py
+#      - requirements.txt
+#    organize:
+#      src: zeronet/src
+#      tools: zeronet/tools
+#      plugins: zeronet/plugins
+#      start.py: zeronet/start.py
     plugin: dump
   scripts:
     source: scripts
+    after:
+      - bundle
     plugin: dump
-    snap:
-      - main.py
+    organize:
+      launcher.py: bin/zeronet

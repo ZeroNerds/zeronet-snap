@@ -3,3 +3,4 @@ stage
 prime
 *.snap
 *.tar*
+deploy.sh

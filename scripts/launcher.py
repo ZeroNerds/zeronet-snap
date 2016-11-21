@@ -6,7 +6,9 @@ import os
 import sys
 
 # ZeroNet Modules
-import zeronet
+import imp
+
+zeronet = imp.load_source('zeronet', os.environ['SNAP']+'/zeronet.py')
 
 def mkdirp(directory):
     if not os.path.exists(directory):
