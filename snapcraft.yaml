@@ -1,5 +1,5 @@
 name: zeronet
-version: 0.5.1-r1758
+version: 0.5.1-r1758-b
 icon: icon.png
 summary: Open, free and uncensorable websites
 description: |
@@ -22,10 +22,21 @@ apps:
   zeronet:
     command: launcher.py
     plugs: [network,network-bind]
+  tor:
+    command: tor.py
+    plugs: [network,network-bind]
 parts:
   bundle:
     after:
       - source
+    snap:
+      - usr
+      - bin
+      - lib
+      - include
+      - etc
+      - -usr/share/doc
+      - -usr/share/man
     source: bundle
     plugin: python
     python-version: python2
@@ -47,4 +58,19 @@ parts:
       - bundle
     snap:
       - launcher.py
+      - tor.py
+      - torrc
+      - launch.sh
     plugin: dump
+  tor:
+    source: https://git.torproject.org/tor.git
+    source-branch: master
+    source-type: git
+    plugin: autotools
+    configflags: [--disable-asciidoc]
+    build-packages:
+      - git
+      - build-essential
+      - automake
+      - libevent-dev
+      - libssl-dev
