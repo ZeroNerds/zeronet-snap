@@ -1,6 +1,7 @@
 name: zeronet
-version: 0.5.1-r1
-summary: Open, free and uncensorable websites, using Bitcoin and BitTorrent
+version: 0.5.1-r1758
+icon: icon.png
+summary: Open, free and uncensorable websites
 description: |
   Decentralized websites using Bitcoin crypto and the BitTorrent network - https://zeronet.io
   Why?
@@ -19,7 +20,7 @@ confinement: strict
 
 apps:
   zeronet:
-    command: bin/zeronet
+    command: launcher.py
     plugs: [network,network-bind]
 parts:
   bundle:
@@ -28,7 +29,7 @@ parts:
     source: bundle
     plugin: python
     python-version: python2
-#    requirements: todo: use requirements.txt instead of setup.py
+    requirements: requirements.txt
   source:
     source: https://github.com/HelloZeroNet/ZeroNet
     source-branch: master
@@ -44,6 +45,6 @@ parts:
     source: scripts
     after:
       - bundle
+    snap:
+      - launcher.py
     plugin: dump
-    organize:
-      launcher.py: bin/zeronet #todo: get rid of this hack
