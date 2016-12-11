@@ -1,6 +1,5 @@
 name: zeronet
-version: 0.5.1-r1758-b
-icon: icon.png
+version: 0.5.1-r1781
 summary: Open, free and uncensorable websites
 description: |
   Decentralized websites using Bitcoin crypto and the BitTorrent network - https://zeronet.io
@@ -45,6 +44,8 @@ parts:
     source: https://github.com/HelloZeroNet/ZeroNet
     source-branch: master
     source-type: git
+    organize:
+      update.py: unused.update.py
     snap:
       - src
       - tools
@@ -61,6 +62,7 @@ parts:
       - tor.py
       - torrc
       - launch.sh
+      - update.py
     plugin: dump
   tor:
     source: https://git.torproject.org/tor.git

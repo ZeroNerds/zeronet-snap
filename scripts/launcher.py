@@ -5,6 +5,7 @@
 import os
 import sys
 import signal
+import errno
 from subprocess import PIPE, Popen
 from threading  import Thread
 from Queue import Queue, Empty
@@ -24,7 +25,11 @@ def signal_handler(signal, frame):
     print('- Exiting ZeroNet...')
     if process:
         if process.poll():
-            process.terminate()
+            try:
+                process.terminate()
+            except OSError, err:
+                if err.errno != errno.ESRCH:
+                    print "- Unknown error while killing the process: "+err.errno
             process.wait()
     sys.exit(0)
 
@@ -38,7 +43,8 @@ def setarg(arg,val):
 def main():
     print("- Please report snap specific errors (e.g. Read-only file system) to: https://github.com/mkg20001/zeronet-snap/issues")
     print("- and ZeroNet specific errors to: https://github.com/HelloZeroNet/ZeroNet/issues")
-    print '[%s]' % ', '.join(map(str, sys.argv))
+    if "--debug" in sys.argv:
+        print '[%s]' % ', '.join(map(str, sys.argv))
     setarg("--data_dir",os.environ['SNAP_USER_COMMON']+"/data")
     setarg("--config_file", os.environ['SNAP_USER_COMMON']+"/zeronet.conf")
     setarg("--log_dir", os.environ['SNAP_USER_DATA']+"/log")

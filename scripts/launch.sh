@@ -13,16 +13,19 @@ start_cmd() {
 }
 start_pid() {
   if ! [ -f $runlock ]; then
-    echo "Something (propably Tor) has failed to start..."
+    echo "Something (probably Tor) has failed to start..."
     exit 2
   fi
   start_cmd $* & add_pid $!
 }
 stop_pids() {
-  rm $runlock
+  if [ -f $runlock ]; then
+    rm $runlock
+  fi
   for p in $(cat $tmp); do
-    kill $p
+    kill $p 2> /dev/null
   done
+  rm $tmp
 }
 
 start_pid $SNAP/tor.py

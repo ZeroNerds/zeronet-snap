@@ -45,7 +45,8 @@ def main():
         print("- Creating "+torrc+"...")
         copyfile(os.environ['SNAP']+"/etc/tor/torrc.sample",torrc)
     #setarg("--verify-config","")
-    print '[%s]' % ', '.join(map(str, argv))
+    if "--debug" in sys.argv:
+        print '[%s]' % ', '.join(map(str, sys.argv))
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
     global process
