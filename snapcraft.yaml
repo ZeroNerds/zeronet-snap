@@ -1,5 +1,5 @@
 name: zeronet
-version: 0.5.1-r1781
+version: 0.5.1-r1786
 summary: Open, free and uncensorable websites
 description: |
   Decentralized websites using Bitcoin crypto and the BitTorrent network - https://zeronet.io
@@ -66,7 +66,7 @@ parts:
     plugin: dump
   tor:
     source: https://git.torproject.org/tor.git
-    source-branch: master
+    source-tag: tor-0.2.9.8
     source-type: git
     plugin: autotools
     configflags: [--disable-asciidoc]
