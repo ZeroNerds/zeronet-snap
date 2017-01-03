@@ -43,7 +43,7 @@ def main():
     setarg("-f",torrc)
     if not os.path.exists(torrc):
         print("- Creating "+torrc+"...")
-        copyfile(os.environ['SNAP']+"/etc/tor/torrc.sample",torrc)
+        copyfile(os.environ['SNAP']+"/torrc",torrc)
     #setarg("--verify-config","")
     if "--debug" in sys.argv:
         print '[%s]' % ', '.join(map(str, sys.argv))
