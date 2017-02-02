@@ -1,5 +1,5 @@
 name: zeronet
-version: 0.5.1-r1855
+version: 0.5.1-r1855b
 summary: Open, free and uncensorable websites
 description: |
   Decentralized websites using Bitcoin crypto and the BitTorrent network - https://zeronet.io
@@ -28,7 +28,7 @@ parts:
   bundle:
     after:
       - source
-    snap:
+    prime:
       - usr
       - bin
       - lib
@@ -46,7 +46,7 @@ parts:
     source-type: git
     organize:
       update.py: unused.update.py
-    snap:
+    prime:
       - src
       - tools
       - plugins
@@ -57,7 +57,7 @@ parts:
     source: scripts
     after:
       - bundle
-    snap:
+    prime:
       - launcher.py
       - tor.py
       - torrc
@@ -66,7 +66,7 @@ parts:
     plugin: dump
   tor:
     source: https://git.torproject.org/tor.git
-    source-tag: tor-0.2.9.8
+    source-tag: tor-0.2.9.9
     source-type: git
     plugin: autotools
     configflags: [--disable-asciidoc]
