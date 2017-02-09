@@ -1,5 +1,5 @@
 name: zeronet
-version: 0.5.1-r1882
+version: 0.5.1-r1882b
 summary: Open, free and uncensorable websites
 description: |
   Decentralized websites using Bitcoin crypto and the BitTorrent network - https://zeronet.io
@@ -22,8 +22,6 @@ apps:
     plugs: [network,network-bind]
 parts:
   bundle:
-    after:
-      - source
     prime:
       - usr
       - bin
@@ -42,6 +40,8 @@ parts:
     source-type: git
     organize:
       update.py: unused.update.py
+    prepare: |
+      sed 's/self.plugin_path = "plugins"/self.plugin_path = os.environ["SNAP_USER_COMMON"]+"\/plugins"/g' -i src/Plugin/PluginManager.py
     prime:
       - src
       - tools
@@ -53,11 +53,11 @@ parts:
     source: scripts
     after:
       - bundle
+      - source
     prime:
       - launcher.py
       - tor.py
       - torrc
-      - launch.sh
       - update.py
     plugin: dump
   tor:

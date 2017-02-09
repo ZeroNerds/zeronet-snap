@@ -70,6 +70,39 @@ def start_zero(args):
     threads.append(zero_thread)
     processes.append(process)
 
+def zero_plugins():
+    #print("- Fixing plugins")
+    plugin_realsrc=os.environ['SNAP']+"/plugins"
+    plugin_src="/snap/zeronet/current/plugins"
+    plugin_dest=os.environ['SNAP_USER_COMMON']+"/plugins"
+
+    all_plugins=os.listdir(plugin_src)
+    notfound=os.listdir(plugin_src)
+    mkdirp(plugin_dest)
+    current=os.listdir(plugin_dest)
+    for pl in current: #check if that plugin exists, and remove it from notfound
+        plp=plugin_dest+"/"+pl
+        if os.path.islink(plp):
+            pld=os.path.realpath(plp)
+            #print "Real of "+plp+" is "+pld
+            if pld.startswith(plugin_realsrc+"/"):
+                if not os.path.exists(pld):
+                    raise Exception("Path "+pld+" doest not exist")
+                #print '[nf: %s]' % ', '.join(map(str, notfound))
+                pln=pld.replace(plugin_realsrc+"/","").replace("disabled-","")
+                if pln in notfound:
+                    notfound.remove(pln)
+                if "disabled-"+pln in notfound:
+                    notfound.remove("disabled-"+pln)
+
+    for pl in notfound: #create that plugin link
+        pld=plugin_dest+"/"+pl
+        pls=plugin_src+"/"+pl
+        if os.path.exists(pld):
+            raise Exception("Path "+pld+" could not be linked to "+pls+": Already exists")
+        #print "Linked "+pls+" to "+pld
+        os.symlink(pls,pld)
+
 def zero_start():
     print("- Please report snap specific errors (e.g. Read-only file system) to: https://github.com/mkg20001/zeronet-snap/issues")
     print("- and ZeroNet specific errors to: https://github.com/HelloZeroNet/ZeroNet/issues")
@@ -77,10 +110,11 @@ def zero_start():
         print '[%s]' % ', '.join(map(str, sys.argv))
     setarg("--data_dir",os.environ['SNAP_USER_COMMON']+"/data")
     setarg("--config_file", os.environ['SNAP_USER_COMMON']+"/zeronet.conf")
-    setarg("--log_dir", os.environ['SNAP_USER_DATA']+"/log")
+    setarg("--log_dir", os.environ['SNAP_USER_COMMON']+"/log")
     mkdirp(os.environ['SNAP_USER_COMMON']+"/data")
-    mkdirp(os.environ['SNAP_USER_DATA']+"/log")
+    mkdirp(os.environ['SNAP_USER_COMMON']+"/log")
     os.chdir(os.environ['SNAP'])
+    zero_plugins()
     sys.exit(zeronet.main())
 
 def main():

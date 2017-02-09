@@ -19,3 +19,6 @@ test: clean dockerbuild deploy
 	@echo "Insert tests here"
 publish: test
 	snapcraft push zeronet*.snap
+script:
+	snapcraft clean scripts
+	snapcraft prime
