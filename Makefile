@@ -2,8 +2,9 @@ deploy:
 	bash deploy.sh #create your own deploy/testing script
 install:
 	sudo snap install --force-dangerous zero*.snap
-install-dev:
-	sudo snap install --force-dangerous --devmode zero*.snap
+try:
+	snapcraft prime
+	snap try prime
 dockerbuild:
 	snapcraft-docker
 cleanbuild:

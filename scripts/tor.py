@@ -26,12 +26,15 @@ def setarg(arg,val):
 process=0
 
 def signal_handler(signal, frame):
-    global process
     print('- Exiting Tor...')
+    global process
     if process:
-        if process.poll():
+        try:
             process.terminate()
-            process.wait()
+        except OSError, err:
+            if err.errno != errno.ESRCH:
+                print "- Error while killing the process: "+err.errno
+        process.wait()
     sys.exit(0)
 
 def main():

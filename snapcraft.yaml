@@ -1,5 +1,5 @@
 name: zeronet
-version: 0.5.1-r1862
+version: 0.5.1-r1882
 summary: Open, free and uncensorable websites
 description: |
   Decentralized websites using Bitcoin crypto and the BitTorrent network - https://zeronet.io
@@ -9,10 +9,6 @@ description: |
   No hosting costs: Sites are served by visitors.
   Impossible to shut down: It's nowhere because it's everywhere.
   Fast and works offline: You can access the site even if Internet is unavailable.
-
-plugs:
-  network:
-  network-bind:
 
 grade: stable
 confinement: strict

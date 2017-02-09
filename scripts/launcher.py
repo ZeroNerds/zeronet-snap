@@ -6,10 +6,10 @@ import os
 import sys
 import signal
 import errno
+
 from subprocess import PIPE, Popen
-from threading  import Thread
-from Queue import Queue, Empty
-from multiprocessing import Pool
+from time import sleep
+import threading
 
 # ZeroNet Modules
 import zeronet
@@ -18,20 +18,21 @@ def mkdirp(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-process=0
+processes=[]
+threads=[]
 
 def signal_handler(signal, frame):
-    global process
     print('- Exiting ZeroNet...')
-    if process:
-        if process.poll():
-            try:
-                process.terminate()
-            except OSError, err:
-                if err.errno != errno.ESRCH:
-                    print "- Unknown error while killing the process: "+err.errno
-            process.wait()
-    sys.exit(0)
+    global processes, threads
+    for process in processes:
+        try:
+            process.terminate()
+        except OSError, err:
+            if err.errno != errno.ESRCH:
+                print "- Error while killing the process: "+err.errno
+        process.wait()
+    for thread in threads:
+        thread.join()
 
 def setarg(arg,val):
     if arg not in sys.argv:
@@ -40,7 +41,36 @@ def setarg(arg,val):
         else:
             sys.argv = [sys.argv[0]]+[arg]+sys.argv[1:]
 
-def main():
+class pipeThread (threading.Thread):
+    def __init__(self, threadID, name, counter, args):
+        threading.Thread.__init__(self)
+        self.threadID = threadID
+        self.name = name
+        self.counter = counter
+        self.args = args
+    def run(self):
+        #print "Starting "+self.name
+        self.args.communicate()
+        print self.name+" has exited"
+
+def start_tor(args):
+    argv=[os.environ['SNAP']+"/command-tor.wrapper"]+args[0:]
+    global threads, process
+    process = Popen(argv)
+    tor_thread=pipeThread(1,"Tor",1,process)
+    tor_thread.start()
+    threads.append(tor_thread)
+    processes.append(process)
+
+def start_zero(args):
+    global threads, processes
+    process = Popen(args)
+    zero_thread=pipeThread(2,"ZeroNet",2,process)
+    zero_thread.start()
+    threads.append(zero_thread)
+    processes.append(process)
+
+def zero_start():
     print("- Please report snap specific errors (e.g. Read-only file system) to: https://github.com/mkg20001/zeronet-snap/issues")
     print("- and ZeroNet specific errors to: https://github.com/HelloZeroNet/ZeroNet/issues")
     if "--debug" in sys.argv:
@@ -51,17 +81,19 @@ def main():
     mkdirp(os.environ['SNAP_USER_COMMON']+"/data")
     mkdirp(os.environ['SNAP_USER_DATA']+"/log")
     os.chdir(os.environ['SNAP'])
+    sys.exit(zeronet.main())
+
+def main():
     if "--enable-tor" in sys.argv:
         sys.argv.remove("--enable-tor")
         setarg("--tor","enable")
-        argv=[os.environ["SNAP"]+"/launch.sh"]+sys.argv[1:]
         signal.signal(signal.SIGINT, signal_handler)
         signal.signal(signal.SIGTERM, signal_handler)
-        global process
-        process = Popen(argv)
-        process.communicate()
+        start_tor([])
+        start_zero(sys.argv)
+        sleep(365*24*60*60*1000) #This makes kill work, but only for 1 year TODO: fix this
     else:
-        sys.exit(zeronet.main())
+        zero_start()
 
 if __name__ == '__main__':
     main()
