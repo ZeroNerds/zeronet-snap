@@ -11,9 +11,6 @@ from subprocess import PIPE, Popen
 from time import sleep
 import threading
 
-# ZeroNet Modules
-import zeronet
-
 def mkdirp(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
@@ -103,6 +100,16 @@ def zero_plugins():
         #print "Linked "+pls+" to "+pld
         os.symlink(pls,pld)
 
+def link(src_):
+    src="/snap/zeronet/current/"+src_
+    dst=os.environ['SNAP_USER_COMMON']+"/"+src_
+    if not os.path.exists(dst):
+        os.symlink(src,dst)
+
+def zero_link():
+    for p in ["update.py","src","zeronet.py"]:
+        link(p)
+
 def zero_start():
     print("- Please report snap specific errors (e.g. Read-only file system) to: https://github.com/mkg20001/zeronet-snap/issues")
     print("- and ZeroNet specific errors to: https://github.com/HelloZeroNet/ZeroNet/issues")
@@ -113,8 +120,13 @@ def zero_start():
     setarg("--log_dir", os.environ['SNAP_USER_COMMON']+"/log")
     mkdirp(os.environ['SNAP_USER_COMMON']+"/data")
     mkdirp(os.environ['SNAP_USER_COMMON']+"/log")
-    os.chdir(os.environ['SNAP'])
+    #os.chdir(os.environ['SNAP'])
     zero_plugins()
+    zero_link()
+    os.chdir(os.environ['SNAP_USER_COMMON'])
+    sys.path.remove(os.environ["SNAP"])
+    sys.path.append(os.environ['SNAP_USER_COMMON'])
+    import zeronet
     sys.exit(zeronet.main())
 
 def main():
