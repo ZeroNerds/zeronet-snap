@@ -53,4 +53,5 @@ Clone the repository and run `snapcraft`
 
 # ToDos
  - [ ] Rewrite launch scripts
- - [ ] Allow enabling/disabling/adding plugins
+ - [x] Allow enabling/disabling/adding plugins
+ - [x] Compile python scripts
