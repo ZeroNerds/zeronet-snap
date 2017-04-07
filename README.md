@@ -52,6 +52,6 @@ Clone the repository and run `snapcraft`
 (To install the self-compiled version use `snap install --force-dangerous zeronet*.snap`)
 
 # ToDos
- - [ ] Rewrite launch scripts
+ - [x] Rewrite launch scripts
  - [x] Allow enabling/disabling/adding plugins
  - [x] Compile python scripts
