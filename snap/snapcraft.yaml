@@ -73,7 +73,7 @@ parts:
       python2 -m py_compile $(find -type f -iname "*.py" -print)
   tor:
     source: https://git.torproject.org/tor.git
-    source-tag: tor-0.2.9.10
+    source-tag: tor-0.3.0.6
     source-type: git
     plugin: autotools
     configflags: [--disable-asciidoc]
