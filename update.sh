@@ -9,7 +9,7 @@ git pull
 #lver=$(git tag | sort | tail -n 1)
 lver=$(cat src/Config.py | grep "^[ ]*self.version" | grep "[0-9]*\.[0-9]*\.[0-9]*" -o)
 
-lat=$(git log -g --grep="Rev[0-9]*" --format="[%H] = %s" | head -n 1)
+lat=$(git log --grep="Rev[0-9]*" --format="[%H] = %s" | head -n 1)
 lc=$(echo "$lat" | grep "\[[a-z0-9A-Z]*\]" -o | grep "[a-z0-9A-Z]*" -o)
 lrev=$(echo "$lat" | grep "Rev[0-9]*" -o)
 echo "commit = $lc / rev = $lrev / ver = $lver"
