@@ -5,3 +5,4 @@ prime
 *.tar*
 deploy.sh
 _OLD
+snap/.snapcraft
