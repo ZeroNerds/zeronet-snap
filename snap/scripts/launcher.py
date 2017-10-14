@@ -93,7 +93,10 @@ def zero_plugins():
             # print "Real of "+plp+" is "+pld
             if pld.startswith(plugin_realsrc + "/"):
                 if not os.path.exists(pld):
-                    raise Exception("Path " + pld + " doest not exist")
+                    if pl == "BigFile":
+                        os.unlink(plp)
+                    else:
+                        raise Exception("Path " + pld + " does not exist")
                 # print '[nf: %s]' % ', '.join(map(str, notfound))
                 pln = pld.replace(plugin_realsrc + "/",
                                   "").replace("disabled-", "")
@@ -134,7 +137,6 @@ def zero_start():
     setarg("--log_dir", os.environ['SNAP_USER_COMMON'] + "/log")
     mkdirp(os.environ['SNAP_USER_COMMON'] + "/data")
     mkdirp(os.environ['SNAP_USER_COMMON'] + "/log")
-    # os.chdir(os.environ['SNAP'])
     zero_plugins()
     zero_link()
     os.chdir(os.environ['SNAP_USER_COMMON'])
