@@ -80,7 +80,7 @@ def zero_plugins():
     plugin_realsrc = os.environ['SNAP'] + "/plugins"
     plugin_src = "/snap/zeronet/current/plugins"
     plugin_dest = os.environ['SNAP_USER_COMMON'] + "/plugins"
-    print "- Linking plugins"
+    print "- Linking plugins..."
 
     all_plugins = os.listdir(plugin_src)
     notfound = os.listdir(plugin_src)
