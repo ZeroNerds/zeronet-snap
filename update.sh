@@ -2,6 +2,8 @@
 
 op="$PWD"
 
+git pull
+
 cd "$HOME/ZeroNet"
 
 git pull
