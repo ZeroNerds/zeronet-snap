@@ -37,7 +37,7 @@ parts:
     source: snap/bundle
     plugin: python
     python-version: python2
-    requirements: $SNAPCRAFT_STAGE/requirements.txt
+    requirements: $SNAPCRAFT_STAGE/../parts/source/src/requirements.txt
   source:
     source: https://github.com/HelloZeroNet/ZeroNet
     source-commit: 7bff5f562c42a4a5f73e104c0f767c1413064aa6
