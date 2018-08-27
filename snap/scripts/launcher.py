@@ -93,7 +93,7 @@ def zero_plugins():
             # print "Real of "+plp+" is "+pld
             if pld.startswith(plugin_realsrc + "/"):
                 if not os.path.exists(pld):
-                    if pl == "BigFile":
+                    if pl == "BigFile" or pl == "Mute":
                         os.unlink(plp)
                     else:
                         raise Exception("Path " + pld + " does not exist")
