@@ -43,8 +43,8 @@ parts:
     source-commit: b45bbff97c023abed98bec972f0208d3bb8f3b5a
     source-type: git
     organize:
-      update.py: unused.update.py
-      update.pyc: unused.update.pyc
+      update.py: upstream.update.py
+      update.pyc: upstream.update.pyc
     override-build: |
       sed 's/self.plugin_path = "plugins"/self.plugin_path = os.environ["SNAP_USER_COMMON"]+"\/plugins"/g' -i src/Plugin/PluginManager.py
       python2 -m py_compile $(find -type f -iname "*.py" -print)
@@ -73,7 +73,7 @@ parts:
       python2 -m py_compile $(find -type f -iname "*.py" -print)
   tor:
     source: https://git.torproject.org/tor.git
-    source-tag: tor-0.3.3.6
+    source-tag: tor-0.3.3.9
     source-type: git
     plugin: autotools
     configflags: [--disable-asciidoc]
