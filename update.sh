@@ -33,3 +33,5 @@ if [ "$pre" != "$v" ]; then
 else
   echo "Up-to-date! ($v)"
 fi
+
+git gc --aggressive
