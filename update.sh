@@ -4,7 +4,11 @@ op="$PWD"
 
 git pull
 
-cd "$HOME/ZeroNet"
+if [ -z "$ZN_LOC" ]; then
+  ZN_LOC="$HOME/ZeroNet"
+fi
+
+cd "$ZN_LOC"
 
 git pull
 
