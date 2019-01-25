@@ -85,7 +85,7 @@ parts:
       cp -rp $PWD/* "$SNAPCRAFT_PART_INSTALL"
   tor:
     source: https://git.torproject.org/tor.git
-    source-tag: tor-0.3.4.9
+    source-tag: tor-0.3.5.7
     source-type: git
     plugin: autotools
     configflags: [--disable-asciidoc]
