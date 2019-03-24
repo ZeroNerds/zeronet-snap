@@ -26,9 +26,9 @@ def signal_handler(signal, frame):
     for process in processes:
         try:
             process.terminate()
-        except OSError, err:
+        except OSError as err:
             if err.errno != errno.ESRCH:
-                print "- Error while killing the process: " + err.errno
+                print("- Error while killing the process: " + err.errno)
         process.wait()
     for thread in threads:
         thread.join()
@@ -53,7 +53,7 @@ class pipeThread (threading.Thread):
     def run(self):
         # print "Starting "+self.name
         self.args.communicate()
-        print self.name + " has exited"
+        print(self.name + " has exited")
 
 
 def start_tor(args):
@@ -80,7 +80,7 @@ def zero_plugins():
     plugin_realsrc = os.environ['SNAP'] + "/plugins"
     plugin_src = "/snap/zeronet/current/plugins"
     plugin_dest = os.environ['SNAP_USER_COMMON'] + "/plugins"
-    print "- Linking plugins..."
+    print("- Linking plugins...")
 
     all_plugins = os.listdir(plugin_src)
     notfound = os.listdir(plugin_src)
@@ -131,7 +131,7 @@ def zero_start():
     print("- Please report snap specific errors (e.g. Read-only file system) to: https://github.com/mkg20001/zeronet-snap/issues")
     print("- and ZeroNet specific errors to: https://github.com/HelloZeroNet/ZeroNet/issues")
     if "--debug" in sys.argv:
-        print '[%s]' % ', '.join(map(str, sys.argv))
+        print('[%s]' % ', '.join(map(str, sys.argv)))
     setarg("--data_dir", os.environ['SNAP_USER_COMMON'] + "/data")
     setarg("--config_file", os.environ['SNAP_USER_COMMON'] + "/zeronet.conf")
     setarg("--log_dir", os.environ['SNAP_USER_COMMON'] + "/log")
