@@ -1,6 +1,7 @@
-name: zeronet3
+name: zeronet
 version: 0.7.0-r4197
 summary: Open, free and uncensorable websites
+base: core18
 description: |
   Decentralized websites using Bitcoin crypto and the BitTorrent network - https://zeronet.io
   Why?
