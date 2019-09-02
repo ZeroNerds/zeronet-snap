@@ -35,9 +35,9 @@ def signal_handler(signal, frame):
     if process:
         try:
             process.terminate()
-        except OSError, err:
+        except OSError as err:
             if err.errno != errno.ESRCH:
-                print "- Error while killing the process: " + err.errno
+                print("- Error while killing the process: " + err.errno)
         process.wait()
     sys.exit(0)
 
@@ -50,11 +50,11 @@ def main():
     torrc = os.environ["SNAP_USER_COMMON"] + "/torrc"
     setarg("-f", torrc)
     if not os.path.exists(torrc):
-        print("- Creating " + torrc + "...")
+        print(("- Creating " + torrc + "..."))
         copyfile(os.environ['SNAP'] + "/torrc", torrc)
     # setarg("--verify-config","")
     if "--debug" in sys.argv:
-        print '[%s]' % ', '.join(map(str, sys.argv))
+        print('[%s]' % ', '.join(map(str, sys.argv)))
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
     global process
