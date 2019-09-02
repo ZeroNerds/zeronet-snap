@@ -1,5 +1,5 @@
 name: zeronet3
-version: 0.7.0-r4022
+version: 0.7.0-r4197
 summary: Open, free and uncensorable websites
 description: |
   Decentralized websites using Bitcoin crypto and the BitTorrent network - https://zeronet.io
@@ -40,7 +40,7 @@ parts:
     requirements: $SNAPCRAFT_STAGE/../parts/source/src/requirements.txt
   source:
     source: https://github.com/HelloZeroNet/ZeroNet
-    source-commit: 63e405c27efcd931e57de0be59475a11f5e77415
+    source-commit: 912c958ac02ec367f522ab1027720b397ae81a3e
     source-type: git
     organize:
       update.py: upstream.update.py
