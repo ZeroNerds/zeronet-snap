@@ -94,7 +94,7 @@ def zero_plugins():
             if pld.startswith(plugin_realsrc + "/"):
                 if not os.path.exists(pld):
                     print("WARNING: Unlinking %s!")
-                    os.unlink(pld)
+                    os.unlink(plp)
                 pln = pld.replace(plugin_realsrc + "/",
                                   "").replace("disabled-", "")
                 if pln in notfound:
