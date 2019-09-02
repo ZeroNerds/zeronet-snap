@@ -100,3 +100,4 @@ parts:
       - libssl-dev
       - zlib1g-dev
       - libffi-dev
+      - pkg-config
