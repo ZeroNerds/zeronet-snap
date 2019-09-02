@@ -38,7 +38,8 @@ parts:
     source: src/bundle
     plugin: python
     python-version: python3
-    requirements: $SNAPCRAFT_STAGE/../parts/source/src/requirements.txt
+    requirements: 
+      - $SNAPCRAFT_STAGE/../parts/source/src/requirements.txt
   source:
     source: https://github.com/HelloZeroNet/ZeroNet
     source-commit: 912c958ac02ec367f522ab1027720b397ae81a3e
@@ -60,8 +61,6 @@ parts:
         - start.py
         - start.pyc
         - requirements.txt
-    stage:
-      - $main
     prime:
       - $main
     plugin: dump
@@ -92,9 +91,11 @@ parts:
     configflags: [--disable-asciidoc]
     stage-packages:
       - libevent-dev
+      - zlib1g
     build-packages:
       - git
       - build-essential
       - automake
       - libevent-dev
       - libssl-dev
+      - zlib1g-dev
