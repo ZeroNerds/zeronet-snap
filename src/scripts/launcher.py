@@ -93,7 +93,7 @@ def zero_plugins():
             # print "Real of "+plp+" is "+pld
             if pld.startswith(plugin_realsrc + "/"):
                 if not os.path.exists(pld):
-                    print("WARNING: Unlinking %s!")
+                    print("WARNING: Unlinking %s!" % plp)
                     os.unlink(plp)
                 pln = pld.replace(plugin_realsrc + "/",
                                   "").replace("disabled-", "")
@@ -139,6 +139,7 @@ def zero_start():
     os.chdir(os.environ['SNAP_USER_COMMON'])
     sys.path.remove(os.environ["SNAP"])
     sys.path.append(os.environ['SNAP_USER_COMMON'])
+    sys.path.append(os.environ['SNAP_USER_COMMON'] + '/src')
     import zeronet
     sys.exit(zeronet.main())
 
