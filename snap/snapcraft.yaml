@@ -80,8 +80,6 @@ parts:
     prime:
       - $scripts
     plugin: dump
-    build-packages: # THIS IS A SNAPCRAFT BUG WORKARROUND
-      - python2.7
     override-build: |
       python3 -m py_compile $(find -type f -iname "*.py" -print)
       cp -rp $PWD/* "$SNAPCRAFT_PART_INSTALL"
@@ -101,3 +99,4 @@ parts:
       - libevent-dev
       - libssl-dev
       - zlib1g-dev
+      - libffi-dev
