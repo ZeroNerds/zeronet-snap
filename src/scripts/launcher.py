@@ -141,7 +141,7 @@ def zero_start():
     sys.path.append(os.environ['SNAP_USER_COMMON'])
     sys.path.append(os.environ['SNAP_USER_COMMON'] + '/src')
     import zeronet
-    sys.exit(zeronet.main())
+    sys.exit(zeronet.start())
 
 
 def main():
