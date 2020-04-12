@@ -1,5 +1,5 @@
 name: zeronet
-version: 0.7.1-r4473
+version: 0.7.1-r4478
 summary: Open, free and uncensorable websites
 base: core18
 description: |
@@ -42,7 +42,7 @@ parts:
       - $SNAPCRAFT_STAGE/../parts/source/src/requirements.txt
   source:
     source: https://github.com/HelloZeroNet/ZeroNet
-    source-commit: 56acac8cd3ebb99e2c451b960d7e7bcfc6e92940
+    source-commit: ad3920b26a50f4eaaa674d62531bd365c8ce1a0c
     source-type: git
     override-build: |
       sed 's/self.plugin_path = "plugins"/self.plugin_path = os.environ["SNAP_USER_COMMON"]+"\/plugins"/g' -i src/Plugin/PluginManager.py
